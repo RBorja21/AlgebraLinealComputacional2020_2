@@ -63,3 +63,38 @@ function heat_eq(L, t, h, k, D)
     end
     return #¿?
 end
+
+
+
+
+
+
+"""
+Implementa la solución numérica a la ecuación de Calor 2D utilizando el
+método de Crank-Nicolson
+
+    Argumentos:
+
+      xs --
+      ys --
+      ts --
+      L  --
+      M  --
+      r  --
+      t  --
+      h  --
+
+
+
+    Return:
+
+
+
+"""
+
+function CrankNicolson2d(L, k, M, r, t, h)
+  xs = -L:k:L
+  ys = -M:r:M
+  ts = 0:h:t
+
+end
