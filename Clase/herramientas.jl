@@ -13,7 +13,7 @@ Genera la matriz de Vandermonde correspondiente al erreglo 1-D que recibe.
 function miVandermonde(arreglo)
 
     n = length(arreglo)
-    #Genero una matriz de dimensión (n,n) donde alvergare la matriz de Vandermonde
+    #Genero una matriz de dimensión (n,n) donde guardare la matriz de Vandermonde
     matrizSol = zeros(n,n)
 
     #Genero la matriz de Vandermonde V_i^j = x_i^(j-1)
