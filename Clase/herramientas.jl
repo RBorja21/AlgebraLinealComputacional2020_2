@@ -33,8 +33,8 @@ Implementa la solución numérica a la ecuación de Calor 1D
 
     Argumentos:
 
-       L -- Longitud del intervalo en X, arreglo
-       t -- Compomente temporal, arreglo
+       L -- Longitud del intervalo en X 
+       t -- Compomente temporal
        h -- Tamaño del paso  de mallado correspondiente en t
        k -- Tampaño del paso de mallado correspondiente en X
        D -- Constante de la ecuación de Calor
@@ -48,20 +48,28 @@ Implementa la solución numérica a la ecuación de Calor 1D
 """
 
 
-function heat_eq(L, t, h, k, D)
-    xs = -L:k:L
+function SolCalor(L, t, h, k, D)
+    #intervalos
+    x  = -L:k:L
     ts = 0:h:t
-    #¿?
-    #¿? Condición de la Delta
-    sols = []
-    for n in ts
-        for i in #¿?
-            us[i] = γ*(us_0[i + 1] + us_0[i - 1] #¿?
+    
+    #genero la estructura de datos donde guardo la solución
+    xLong, tsLong = length(x), length(ts)
+    Sol           = zeros(xLong, tsLong)
+    
+    #Impongo condicíon inicial 
+    Sol[floor(Int, length(Sol[:,1])/2 + 1), 1] = 1
+    
+    #Itero para generar la solución
+    cte = (h*D)/k^2
+    
+    for i in 1:length(ts) - 1
+        for j in 2:length(x)-1
+            Sol[j, i + 1] = cte*(Sol[j+1, i] - 2*Sol[j,i] + Sol[j-1, i]) + Sol[j, i]
         end
-        us_0 = copy(us)
-        push!(sols, us_0)
     end
-    return #¿?
+    
+    return ts, x, Sol
 end
 
 
