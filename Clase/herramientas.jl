@@ -61,11 +61,11 @@ function SolCalor(L, t, h, k, D)
     Sol[floor(Int, length(Sol[:,1])/2 + 1), 1] = 1
     
     #Itero para generar la solución
-    cte = (h*D)/k^2
+    CourandNumber = (h*D)/k^2  
     
     for i in 1:length(ts) - 1
         for j in 2:length(x)-1
-            Sol[j, i + 1] = cte*(Sol[j+1, i] - 2*Sol[j,i] + Sol[j-1, i]) + Sol[j, i]
+            Sol[j, i + 1] = Sol[j, i] + CourandNumber*(Sol[j+1, i] - 2*Sol[j,i] + Sol[j-1, i]) 
         end
     end
     
