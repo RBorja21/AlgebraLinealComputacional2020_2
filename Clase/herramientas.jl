@@ -49,7 +49,7 @@ Implementa la solución numérica a la ecuación de Calor 1D
 
 
 function SolCalor(L, t, h, k, D)
-    #intervalos
+    #intervalos o mallado
     x  = -L:k:L
     ts = 0:h:t
     
@@ -59,6 +59,7 @@ function SolCalor(L, t, h, k, D)
     
     #Impongo condicíon inicial 
     Sol[floor(Int, length(Sol[:,1])/2 + 1), 1] = 1
+ 
     
     #Itero para generar la solución
     CourandNumber = (h*D)/k^2  
@@ -71,6 +72,51 @@ function SolCalor(L, t, h, k, D)
     
     return ts, x, Sol
 end
+
+
+
+""" 
+    Genera malla circular de radio r dentro de una malla cuadrada. 
+
+Argumentos: 
+ 
+        L       -- Longitud de la caja más grande, valor entero. 
+        deltaX  -- Espaciado de la malla, valor entero. 
+        rangoX  -- Rango en el eje X de la malla circular, arreglo [punotInicial, puntoFinal]
+        r       -- Radio de la malla circular, valor entero
+        v0      -- Valor del Potencial V0 al que se encuentra la malla circular.
+
+Return: 
+        ladoCajaX -- Mallado del lado X de la caja 
+        ladoCajaY -- Mallado del lado Y de la caja 
+        Malla     -- Mallado que requiere el problema 
+"""
+
+function generaMallaCircular(L, deltaX, rangoX, r, v0)
+    
+    #Longitudes de la malla cuadrada
+    ladoCajaX = -L/2:deltaX:L/2
+    ladoCajaY = -L/2:deltaX:L/2
+    
+    #Geneno una matriz para guardar los valores del potencial
+    malla = zeros(length(ladoCajaY), length(ladoCajaX))
+    
+    #Itero sobre los valores del mallado. 
+    for l in 1:length(ladoCajaY)
+        for k in 1:length(ladoCajaX)
+            #si se encuentra en el circulo le asigno el valor del potencial V0
+            if (rangoX[1] <= ladoCajaX[k] <= rangoX[2]) && 
+                (-sqrt(r^2 - ladoCajaX[k]^2) <= ladoCajaY[l] <= sqrt(r^2 - ladoCajaX[k]^2))                
+                malla[l,k] = v0
+            else
+                continue
+            end
+        end
+    end
+    
+    return ladoCajaX, ladoCajaY, malla
+end
+
 
 
 
